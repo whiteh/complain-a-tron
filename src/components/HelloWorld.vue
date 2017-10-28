@@ -120,9 +120,9 @@ export default {
 
       },
       suggestion () {
-          const self = this,
-          interval = Math.floor(Math.random() * 100000) + 3000;
-          this.interval = setInterval(function() { 
+        const self = this,
+              interval = Math.floor(Math.random() * 100000) + 3000;
+        this.interval = setInterval(function() { 
           clearInterval(self.interval);
           EventBus.$emit("suggest");
           self.suggestion() }, interval);
