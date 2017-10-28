@@ -84,6 +84,7 @@ export default {
     },
     created: function () {
       // `this` points to the vm instance
+      this.suggestion();
 
     },
     methods: {
@@ -102,6 +103,15 @@ export default {
           $("#myModal").modal("show")
           return false;
         }
+      },
+      suggestion () {
+        const self = this,
+              interval = Math.floor(Math.random() * 10000) + 3000;
+        this.interval = setInterval(function() { 
+          clearInterval(self.interval);
+          EventBus.$emit("suggest");
+          self.suggestion() }, interval);
+        console.log(interval);
       }
     },
     components: {
