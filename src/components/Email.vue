@@ -6,7 +6,7 @@
     <br/><br/>
     <input type="text" v-on:keydown="op" id="nameField">
 
-    <button type="button" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
+    <stickyButton v-on:click="next()"></stickyButton>
 
     <br/><br/>
     Remember, your application is underway now. If you cancel we may need to reclaim our costs.
@@ -15,6 +15,11 @@
 </template>
 
 <script>
+
+import stickyButton from '@/components/stickyButton'
+import modal from '@/components/modal'
+import { EventBus } from './events.js';
+
 export default {
   name: 'Email',
   data: function () {
@@ -23,7 +28,7 @@ export default {
       }
     },
     created: function () {
-      // `this` points to the vm instance
+      EventBus.$emit('speak', "Now, lets have your email address. That will be the address that people use to email you. You know, your friends and people like that");
 
     },
     methods: {
