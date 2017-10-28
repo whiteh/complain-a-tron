@@ -9,13 +9,15 @@
 </head>
 <body>
   <div id="app">
-    
+    <clippy></clippy>
   </div>
 
   <script>
-    new Vue({
-      el: '#app',
-      data: {
+
+  Vue.component('clippy', {
+    template: '<div class="clippy"></div>',
+    data () {
+        return {};
       },
       mounted () {
         console.log("mounted");
@@ -25,13 +27,16 @@
         showHelper (helper) {
           var self = this;
           console.log("in showHelper");
-          helper = helper || this.helper;
+          helper = helper || this.selectedHelper;
           clippy.load(helper, function(agent){
               // do anything with the loaded agent
               agent.show();
               agent.speak("This is a test");
               self.selectedHelper = helper;
               self.agent = agent;
+
+              // gesture at a given point (if gesture animation is available)
+              agent.gestureAt(200,200);
           });      
         },
         selectHelper () {
@@ -40,11 +45,14 @@
           console.log("in selectHelper");
           this.showHelper(agents[index]);
         }
+      }
+    });
 
+    new Vue({
+      el: '#app',
+      data: {
       }
     })
-
-    
   </script>
 
   <!-- Init script -->
