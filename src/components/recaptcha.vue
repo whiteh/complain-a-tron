@@ -28,6 +28,7 @@
       reset () {
         this.$refs.recaptcha.reset()
         this.number_of_resets+=1;
+        EventBus.$emit("captchaReset");
       },
       onVerify: function (response) {
         var rand = Math.floor(Math.random() * 5);
@@ -37,7 +38,7 @@
           EventBus.$emit("speak", "Sorry, you failed the test.  We don't believe you're human.  Please try again...")
           return;
         }
-        console.log('Verify: ' + response)
+        EventBus.$emit("captchaPassed");
         this.time = Math.ceil(15 * (1/this.number_of_resets));
         clearInterval(this.interval);
         this.interval = setTimeout(this.updateCount, 1000);
