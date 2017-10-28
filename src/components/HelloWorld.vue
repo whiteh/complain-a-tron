@@ -39,6 +39,7 @@
 <script>
 
 import clippy from '@/components/clippy'
+import { EventBus } from './events.js';
 
 export default {
   name: 'HelloWorld',
@@ -88,6 +89,7 @@ export default {
     methods: {
       op:function(e){
         if(this.counter<this.annoyingintro.length){
+          EventBus.$emit("alert");
           this.modaltext = this.annoyingintro[this.counter].text;
           this.modalheader = this.annoyingintro[this.counter].header;
           this.counter++;
