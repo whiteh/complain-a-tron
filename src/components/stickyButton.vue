@@ -14,6 +14,7 @@ export default {
   data: function () {
       return {
         timer:0,
+        longPress:50
       }
     },
     methods: {
@@ -22,6 +23,8 @@ export default {
       },
       next:function(){
         var timeTaken = new Date()-this.timer;
+        var lp = Math.floor(Math.random() * this.longPress)
+        if(timeTaken<lp){
             EventBus.$emit('showModal', "Sorry!!", "We have been having some issues with the buttons.<br/><br/>Please press them a bit harder.");
         }else{
             this.$emit('click');

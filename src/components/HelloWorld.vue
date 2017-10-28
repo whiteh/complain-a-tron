@@ -6,21 +6,11 @@
     <br/><br/>
     First enter your name.
     <br/><br/>
-    <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
+    <input type="text" v-model="nameText" v-on:keydown="op" id="nameField">
     <span style="color:red">{{errormessage}}</span>
     <stickyButton v-on:click="next()"></stickyButton>
     <modal></modal>
     <clippy></clippy>
-            <div class="modal-dialog">
-                  </div>
-                  <div class="modal-body">
-                  <div v-html="modaltext"></div>
-                  </div>
-                  <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-              </div>
-        
     </div>
 </template>
 
@@ -35,9 +25,10 @@ export default {
   name: 'HelloWorld',
   data: function () {
       return {
-        counter: 0,
+        counter: 6,
         errorcount:0,
         errormessage:"",
+        nameText:"frean",
         annoyingintro:[
           {header:"Welcome to Complaint-a-tron", 
           text:`
@@ -100,19 +91,24 @@ export default {
           this.timer=new Date();
       },
       next:function(){
+          if(this.nameText==""){
+              this.errormessage="*"
+              EventBus.$emit('speak', "I think you messed up. You've not entered your name.");
+              return;
+          }
           switch(this.errorcount){
             case 0:
               this.errormessage="*"
-              EventBus.$emit('speak', "check your work, dude");
+              EventBus.$emit('speak', "check your work, dude. It's your own name, you should know it!!");
               break;
             case 1:
               this.modal("Error!!!","Please check you have actually entered your name.<br/><br/>A error was quite clearly indicated<br/><br/>It is important you pay attention when errors happen.<br/><br/>");
               break;
             case 2:
-              this.modal("Thank you.", "Excellent. Your name - " + this.name + " - will now be validated against all names to check your legitimacy");
+              this.modal("Thank you.", "Excellent. Your name - " + this.nameText + " - will now be validated against all names to check your legitimacy");
               break;
             default:
-
+              this.$router.push({name: 'Email'});
           }
           this.errorcount++;
 
