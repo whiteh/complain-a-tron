@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clippy</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="./js/clippy.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./style/clippy.css" media="all">
+</head>
+<body>
+  <div id="app">
+    <clippy></clippy>
+  </div>
+
+  <script>
+
+  export default {
+    template: '<div class="clippy"></div>',
+    data () {
+        return {};
+      },
+      mounted () {
+        console.log("mounted");
+        this.selectHelper();
+      },
+      methods: {
+        showHelper (helper) {
+          var self = this;
+          console.log("in showHelper");
+          helper = helper || this.selectedHelper;
+          clippy.load(helper, function(agent){
+              // do anything with the loaded agent
+              agent.show();
+              agent.speak("This is a test");
+              self.selectedHelper = helper;
+              self.agent = agent;
+
+              // gesture at a given point (if gesture animation is available)
+              agent.gestureAt(200,200);
+          });      
+        },
+        selectHelper () {
+          const agents = ['Merlin', 'Clippy', 'Rover', 'Links'],
+                index  = Math.floor(Math.random() * agents.length);
+          console.log("in selectHelper");
+          this.showHelper(agents[index]);
+        }
+      }
+    };
+
+    new Vue({
+      el: '#app',
+      data: {
+      }
+    })
+  </script>
+
+  <!-- Init script -->
+  <script type="text/javascript">
+      
+  </script>
+</body>
+</html>

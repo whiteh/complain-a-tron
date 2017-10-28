@@ -31,10 +31,14 @@
         
             </div>
         </div>
+        <clippy></clippy>
     </div>
 </template>
 
 <script>
+
+import clippy from '@/components/clippy'
+
 export default {
   name: 'HelloWorld',
   data: function () {
@@ -132,6 +136,9 @@ export default {
         
         
       }
+    },
+    components: {
+      clippy: clippy
     }
 }
 </script>
