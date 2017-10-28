@@ -14,6 +14,7 @@ export default {
       mounted () {
         this.selectHelper();
         EventBus.$on("please", ()=>{this.please()});
+        EventBus.$on("alert", ()=>{this.agent.play("GetAttention")});
       },
       methods: {
         showHelper (helper) {
@@ -26,11 +27,12 @@ export default {
               self.agent = agent;
 
               // gesture at a given point (if gesture animation is available)
-              agent.gestureAt(200,200);
+              console.log(agent.animations());
+
           });      
         },
         selectHelper () {
-          const agents = ['Merlin', 'Clippy', 'Rover', 'Links'],
+          const agents = ['Clippy'],
                 index  = Math.floor(Math.random() * agents.length);
           this.showHelper(agents[index]);
         },

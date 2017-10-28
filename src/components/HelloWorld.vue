@@ -38,6 +38,7 @@
 <script>
 
 import clippy from '@/components/clippy'
+import { EventBus } from './events.js';
 import sticky_button from '@/components/stickyButton'
 
 export default {
@@ -93,6 +94,7 @@ export default {
     methods: {
       op:function(e){
         if(this.counter<this.annoyingintro.length){
+          EventBus.$emit("alert");
           this.modal(this.annoyingintro[this.counter].header,this.annoyingintro[this.counter].text);
           this.counter++;
           $("#myModal").on('hidden.bs.modal', function () {
