@@ -10,18 +10,11 @@
       <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
       <span style="color:red">{{errormessage}}</span>
       <stickyButton v-on:click="next()"></stickyButton>
-      <modal></modal>
     </div>
+    <modal></modal>
     <recaptcha></recaptcha>
     <clippy></clippy>
-            <div class="modal-dialog">
-                  </div>
-                  <div class="modal-body">
-                  <div v-html="modaltext"></div>
-                  </div>
-                  <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
+            
     </div>
 </template>
 
