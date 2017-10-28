@@ -13,26 +13,43 @@
   </div>
 
   <script>
-  new Vue({
-        el: '#app',
-        data: {
+    new Vue({
+      el: '#app',
+      data: {
+      },
+      mounted () {
+        console.log("mounted");
+        this.selectHelper();
+      },
+      methods: {
+        showHelper (helper) {
+          var self = this;
+          console.log("in showHelper");
+          helper = helper || this.helper;
+          clippy.load(helper, function(agent){
+              // do anything with the loaded agent
+              agent.show();
+              agent.speak("This is a test");
+              self.selectedHelper = helper;
+              self.agent = agent;
+          });      
         },
-        methods: {
-
+        selectHelper () {
+          const agents = ['Merlin', 'Clippy', 'Rover', 'Links'],
+                index  = Math.floor(Math.random() * agents.length);
+          console.log("in selectHelper");
+          this.showHelper(agents[index]);
         }
+
       }
     })
+
+    
   </script>
 
   <!-- Init script -->
   <script type="text/javascript">
-      const agents = ['Merlin', 'Clippy', 'Rover', 'Links'],
-            index  = Math.floor(Math.random() * agents.length);
-      clippy.load(agents[index], function(agent){
-          // do anything with the loaded agent
-          agent.show();
-          agent.speak("This is a test");
-      });
+      
   </script>
 </body>
 </html>
