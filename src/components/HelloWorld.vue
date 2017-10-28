@@ -6,10 +6,9 @@
     <br/><br/>
     First enter your name.
     <br/><br/>
-    <input type="text" v-on:keydown="op" id="nameField">
-
-    <button type="button" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
-
+    <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
+    <span style="color:red">{{errormessage}}</span>
+    <button type="button"  @click="next" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
 
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
@@ -40,7 +39,10 @@ export default {
   name: 'HelloWorld',
   data: function () {
       return {
-        counter: 0,
+        counter: 10,
+        errorcount:0,
+        name:"peter",
+        errormessage:"",
         annoyingintro:[
           {header:"Welcome to Complaint-a-tron", 
           text:`
@@ -96,6 +98,39 @@ export default {
           $("#myModal").modal("show")
           return false;
         }
+      },
+      modal: function(header, text){
+        this.modaltext = text;
+        this.modalheader = header;
+        
+        $("#myModal").modal("show")
+      },
+      next:function(){
+        
+        switch(this.errorcount){
+          case 0:
+            this.errormessage="*"
+            break;
+          case 1:
+            this.modal("Error!!!","Please check you have actually entered your name.<br/><br/>A error was quite clearly indicated<br/><br/>It is important you pay attention when errors happen.<br/><br/>");
+            $("#myModal").modal("show")
+            break;
+          case 2:
+            this.modaltext = "Excellent. Your name - " + this.name + " - will now be validated against all names to check your legitimacy";
+            this.modalheader = "Thank you.";
+            
+            $("#myModal").modal("show")
+            break;
+          default:
+
+        }
+        this.errorcount++;
+
+        
+        
+        //this.$router.push({name: 'Email'});
+        
+        
       }
     }
 }
