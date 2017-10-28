@@ -9,7 +9,9 @@ import { EventBus } from './events.js';
 export default {
     name: 'clippy',
     data () {
-        return {};
+        return {
+          synth: window.speechSynthesis || null
+        };
       },
       mounted () {
         this.selectHelper();
@@ -39,7 +41,7 @@ export default {
         },
         // Actions
         please () {
-          this.agent.speak("You didn't say the magic word...");
+          this.speak("You didn't say the magic word...");
         },
         suggestion() {
           const suggestions = [
@@ -48,7 +50,14 @@ export default {
             'Do any of your friends have this issue?  Maybe it\'s just you...'
           ],
           index = Math.floor(Math.random() * suggestions.length);
-          this.agent.speak(suggestions[index]);
+          this.speak(suggestions[index]);
+        },
+        speak(message) {
+          if (this.synth) {
+            var utterThis = new SpeechSynthesisUtterance(message);
+            this.synth.speak(utterThis);
+          }
+          this.agent.speak(message);
         }
       }
     }
