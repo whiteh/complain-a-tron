@@ -14,7 +14,7 @@
 
   <script>
 
-  Vue.component('clippy', {
+  export default {
     template: '<div class="clippy"></div>',
     data () {
         return {};
@@ -46,7 +46,7 @@
           this.showHelper(agents[index]);
         }
       }
-    });
+    };
 
     new Vue({
       el: '#app',
