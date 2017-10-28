@@ -6,10 +6,11 @@
     <br/><br/>
     First enter your name.
     <br/><br/>
-    <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
-    <span style="color:red">{{errormessage}}</span>
-    <button type="button"  @mousedown="startpress" @click="next" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
-    <sticky_button></sticky_button>
+    <input type="text" v-on:keydown="op" id="nameField">
+
+    <button type="button" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
+
+
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -39,18 +40,12 @@
 
 import clippy from '@/components/clippy'
 import { EventBus } from './events.js';
-import sticky_button from '@/components/stickyButton'
 
 export default {
   name: 'HelloWorld',
   data: function () {
       return {
-        counter: 10,
-        timer:0,
-        longPress:1000,
-        errorcount:0,
-        name:"peter",
-        errormessage:"",
+        counter: 0,
         annoyingintro:[
           {header:"Welcome to Complaint-a-tron", 
           text:`
@@ -89,13 +84,15 @@ export default {
     },
     created: function () {
       // `this` points to the vm instance
+      this.suggestion();
 
     },
     methods: {
       op:function(e){
         if(this.counter<this.annoyingintro.length){
           EventBus.$emit("alert");
-          this.modal(this.annoyingintro[this.counter].header,this.annoyingintro[this.counter].text);
+          this.modaltext = this.annoyingintro[this.counter].text;
+          this.modalheader = this.annoyingintro[this.counter].header;
           this.counter++;
           $("#myModal").on('hidden.bs.modal', function () {
             $("#nameField").focus();
@@ -103,44 +100,17 @@ export default {
           $("#myModal").on('show.bs.modal', function () {
             $("#nameField").blur();
           });
-
+          $("#myModal").modal("show")
           return false;
         }
       },
-      modal: function(header, text){
-        this.modaltext = text;
-        this.modalheader = header;
-        
-        $("#myModal").modal("show")
-      },
-      startpress:function(){
-          this.timer=new Date();
-      },
-      next:function(){
-        var timeTaken = new Date()-this.timer;
-        if(timeTaken<this.longPress){
-          this.modal("Sorry!!", "We have been having some issues with the buttons.<br/><br/>Please press them a bit harder.")
-        }else{
-          this.longPress=false;
-          switch(this.errorcount){
-            case 0:
-              this.errormessage="*"
-              break;
-            case 1:
-              this.modal("Error!!!","Please check you have actually entered your name.<br/><br/>A error was quite clearly indicated<br/><br/>It is important you pay attention when errors happen.<br/><br/>");
-              break;
-            case 2:
-              this.modal("Thank you.", "Excellent. Your name - " + this.name + " - will now be validated against all names to check your legitimacy");
-              break;
-            default:
-
-          }
-          this.errorcount++;
-        }
-        
-        
-        //this.$router.push({name: 'Email'});
-        
+      suggestion () {
+        const self = this,
+              interval = Math.floor(Math.random() * 100000) + 3000;
+        this.interval = setInterval(function() { 
+          clearInterval(self.interval);
+          EventBus.$emit("suggest");
+          self.suggestion() }, interval);
         
       }
     },
