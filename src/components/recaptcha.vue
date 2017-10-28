@@ -2,13 +2,11 @@
   <div class="captcha">
     <vue-recaptcha class="recaptcha" ref="recaptcha" :sitekey="captcha_key" @verify="onVerify"></vue-recaptcha>
     <div v-if="time>0" class="count">{{ time }}</div>
-    <clippy></clippy>
   </div>
 </template>
 
 <script>
   import VueRecaptcha from 'vue-recaptcha';
-  import clippy from '@/components/clippy';
   import { EventBus } from './events.js';
 
   /*setInterval(() => {
@@ -55,7 +53,7 @@
         }
       }
     },
-    components: { VueRecaptcha, clippy }
+    components: { VueRecaptcha }
   };
 </script>
 <style scoped>
