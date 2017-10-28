@@ -1,13 +1,12 @@
 <template>
     <span>
         <button type="button"  @mousedown="startpress" @click="next" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
-        <modal></modal>
     </span>
 </template>
 
 <script>
 
-
+import { EventBus } from './events.js';
 import modal from '@/components/modal';
 
 export default {
@@ -26,7 +25,7 @@ export default {
         var timeTaken = new Date()-this.timer;
         alert(timeTaken)
         if(timeTaken<this.longPress){
-            this.$emit('showModal', "Sorry!!", "We have been having some issues with the buttons.<br/><br/>Please press them a bit harder.");
+            EventBus.$emit('showModal', "Sorry!!", "We have been having some issues with the buttons.<br/><br/>Please press them a bit harder.");
         }else{
             this.$emit('click');
         }

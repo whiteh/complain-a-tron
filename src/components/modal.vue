@@ -23,6 +23,7 @@
 
 <script>
 
+import { EventBus } from './events.js';
 
 export default {
   name: 'modal',
@@ -33,15 +34,15 @@ export default {
         modalheader:1000
       }
     },
+    mounted () {
+        EventBus.$on("showModal", this.display);
+      },
     methods: {
         display:function(header, text){
             this.modaltext = text;
             this.modalheader = header;
             $("#" + this.id).modal("show")
       }
-    },
-    created: function() {
-        this.$parent.$on('showModal', this.display);
     }
 }
 </script>

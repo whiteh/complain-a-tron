@@ -13,6 +13,7 @@ export default {
       },
       mounted () {
         this.selectHelper();
+        EventBus.$on("speak", this.speak);
         EventBus.$on("please", ()=>{this.please()});
         EventBus.$on("suggest", ()=>{this.suggestion()});
         EventBus.$on("alert", ()=>{this.agent.play("GetAttention")});
@@ -40,6 +41,9 @@ export default {
         // Actions
         please () {
           this.agent.speak("You didn't say the magic word...");
+        },
+        speak (text) {
+          this.agent.speak(text);
         },
         suggestion() {
           const suggestions = [

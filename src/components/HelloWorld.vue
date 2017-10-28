@@ -11,22 +11,7 @@
     <stickyButton v-on:click="next()"></stickyButton>
     <modal></modal>
     <clippy></clippy>
-=======
-    <input type="text" v-on:keydown="op" id="nameField">
-
-    <button type="button" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
-
-
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-        
-              <!-- Modal content-->
-              <div class="modal-content">
-                  <div class="modal-header">
-                    <img src="assets/logo.png" style="hight:100;width:100">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">{{modalheader}}</h4>
                   </div>
                   <div class="modal-body">
                   <div v-html="modaltext"></div>
@@ -36,28 +21,23 @@
                   </div>
               </div>
         
-            </div>
-        </div>
-        <clippy></clippy>
->>>>>>> 76935e3038de44207892f58e4baab496009cb174
     </div>
 </template>
 
 <script>
 
 import clippy from '@/components/clippy'
-<<<<<<< HEAD
 import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
-=======
 import { EventBus } from './events.js';
->>>>>>> 76935e3038de44207892f58e4baab496009cb174
 
 export default {
   name: 'HelloWorld',
   data: function () {
       return {
         counter: 0,
+        errorcount:0,
+        errormessage:"",
         annoyingintro:[
           {header:"Welcome to Complaint-a-tron", 
           text:`
@@ -102,8 +82,7 @@ export default {
     methods: {
       op:function(e){
         if(this.counter<this.annoyingintro.length){
-          this.modaltext = this.annoyingintro[this.counter].text;
-          this.modalheader = this.annoyingintro[this.counter].header;
+          this.modal(this.annoyingintro[this.counter].header, this.annoyingintro[this.counter].text);
           this.counter++;
           $("#myModal").on('hidden.bs.modal', function () {
             $("#nameField").focus();
@@ -111,22 +90,20 @@ export default {
           $("#myModal").on('show.bs.modal', function () {
             $("#nameField").blur();
           });
-          $("#myModal").modal("show")
           return false;
         }
       },
-<<<<<<< HEAD
       modal: function(header, text){
-        this.$emit('showModal', header, text);
+        EventBus.$emit('showModal', header, text);
       },
       startpress:function(){
           this.timer=new Date();
       },
       next:function(){
-        alert("clicked");
           switch(this.errorcount){
             case 0:
               this.errormessage="*"
+              EventBus.$emit('speak', "check your work, dude");
               break;
             case 1:
               this.modal("Error!!!","Please check you have actually entered your name.<br/><br/>A error was quite clearly indicated<br/><br/>It is important you pay attention when errors happen.<br/><br/>");
@@ -138,12 +115,20 @@ export default {
 
           }
           this.errorcount++;
-        
-        
-        //this.$router.push({name: 'Email'});
-        
+
+          //this.$router.push({name: 'Email'});
+
+      },
+      suggestion () {
+          const self = this,
+          interval = Math.floor(Math.random() * 100000) + 3000;
+          this.interval = setInterval(function() { 
+          clearInterval(self.interval);
+          EventBus.$emit("suggest");
+          self.suggestion() }, interval);
         
       }
+
     },
     components: {
       clippy: clippy,
