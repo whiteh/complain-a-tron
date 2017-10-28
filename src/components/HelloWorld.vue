@@ -8,37 +8,17 @@
     <br/><br/>
     <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
     <span style="color:red">{{errormessage}}</span>
-    <button type="button"  @mousedown="startpress" @click="next" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
-    <sticky_button></sticky_button>
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-        
-              <!-- Modal content-->
-              <div class="modal-content">
-                  <div class="modal-header">
-                    <img src="assets/logo.png" style="hight:100;width:100">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">{{modalheader}}</h4>
-                  </div>
-                  <div class="modal-body">
-                  <div v-html="modaltext"></div>
-                  </div>
-                  <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-              </div>
-        
-            </div>
-        </div>
-        <clippy></clippy>
+    <stickyButton v-on:click="next()"></stickyButton>
+    <modal></modal>
+    <clippy></clippy>
     </div>
 </template>
 
 <script>
 
 import clippy from '@/components/clippy'
-import sticky_button from '@/components/stickyButton'
+import stickyButton from '@/components/stickyButton'
+import modal from '@/components/modal'
 
 export default {
   name: 'HelloWorld',
@@ -106,20 +86,13 @@ export default {
         }
       },
       modal: function(header, text){
-        this.modaltext = text;
-        this.modalheader = header;
-        
-        $("#myModal").modal("show")
+        this.$emit('showModal', header, text);
       },
       startpress:function(){
           this.timer=new Date();
       },
       next:function(){
-        var timeTaken = new Date()-this.timer;
-        if(timeTaken<this.longPress){
-          this.modal("Sorry!!", "We have been having some issues with the buttons.<br/><br/>Please press them a bit harder.")
-        }else{
-          this.longPress=false;
+        alert("clicked");
           switch(this.errorcount){
             case 0:
               this.errormessage="*"
@@ -134,7 +107,6 @@ export default {
 
           }
           this.errorcount++;
-        }
         
         
         //this.$router.push({name: 'Email'});
@@ -143,7 +115,9 @@ export default {
       }
     },
     components: {
-      clippy: clippy
+      clippy: clippy,
+      stickyButton: stickyButton,
+      modal: modal
     }
 }
 </script>
