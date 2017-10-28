@@ -5,7 +5,7 @@
 
 <script>
 import { EventBus } from './events.js';
-EventBus.$on("test", function(){console.log("test fired");});
+
 export default {
     name: 'clippy',
     data () {
@@ -13,7 +13,7 @@ export default {
       },
       mounted () {
         this.selectHelper();
-        EventBus.$emit("test")
+        EventBus.$on("please", ()=>{this.please()});
       },
       methods: {
         showHelper (helper) {
@@ -22,7 +22,6 @@ export default {
           clippy.load(helper, function(agent){
               // do anything with the loaded agent
               agent.show();
-              agent.speak("This is a test");
               self.selectedHelper = helper;
               self.agent = agent;
 
@@ -34,10 +33,13 @@ export default {
           const agents = ['Merlin', 'Clippy', 'Rover', 'Links'],
                 index  = Math.floor(Math.random() * agents.length);
           this.showHelper(agents[index]);
-        }
+        },
+        // Actions
+        please () {
+          this.agent.speak("You didn't say the magic word...");
+        },
       }
     }
-
 
 </script>
 
