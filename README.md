@@ -2,6 +2,6 @@
 
 # To dev:
 
-`sudo npm install watch-http-server`
+`sudo npm install -g watch-http-server`
 
 `watch-http-server ./serverless/client/dist/`
