@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     So you want to make a complaint... 
     <br/><br/>
     Let's make this nice and easy...
@@ -12,6 +13,23 @@
     <stickyButton v-on:click="next()"></stickyButton>
     <modal></modal>
     <clippy></clippy>
+=======
+     <div v-if="captchaPassed === true">
+      So you want to make a complaint... 
+      <br/><br/>
+      Let's make this nice and easy...
+      <br/><br/>
+      First enter your name.
+      <br/><br/>
+      <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
+      <span style="color:red">{{errormessage}}</span>
+      <stickyButton v-on:click="next()"></stickyButton>
+    </div>
+    <modal></modal>
+    <recaptcha></recaptcha>
+    <clippy></clippy>
+            
+>>>>>>> f1e8e715334fc581da80b3f6d8bd01589e1e2eda
     </div>
 </template>
 
