@@ -1,9 +1,14 @@
 <template>
   <div>
     <div v-if="showIntro">
-      We have to test you again
+      Ombudsman time is a resource that must be protected and one of the worst culprits for that is robots submitted fake complaints.<br/><br/>
+      You have passed the previous robot tests but our analysis indicates that you may be the hardest form of robot to identify - a replicant.
       <br/><br/>
-      <stickyButton v-on:click="start()" text="Start the Test"></stickyButton>
+      We will, therefore, need you to undergo an additional test that will be interpreted using a Voight-Kampff machine.
+      <br/><br/>
+      If you fail or do not complete this test we will assume that you are a robot and will pass your details to all relevent authorities which may affect your freedom to access the internet.
+      <br/><br/>
+      <stickyButton v-on:click="start()" text="Start the Test >>>"></stickyButton>
     </div>
     <div v-if="showQuestions">
       {{question}}
@@ -20,12 +25,17 @@
     <div>
       <canvas id="foo"></canvas>
     </div>
-    <div v-if="showResults">
+    <div v-if="showResultsString">
       You have been determined to be human. Thank you for completing the test.
 
       <br/><br/>
-      <stickyButton v-on:click="next()" text="Next"></stickyButton>
+      You may now complete the process to lodge your complaints<br/><br/>
+      <stickyButton v-on:click="next()" text="Send Complaint >>>"></stickyButton>
     </div>
+
+    <clippy></clippy>    
+    <modal></modal>
+
   </div>
 </template>
 
@@ -34,6 +44,7 @@
 import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
 import { EventBus } from './events.js';
+import clippy from '@/components/clippy'
 
 import questions from '@/components/data/questions.json'
 
@@ -47,14 +58,18 @@ export default {
         answers:[],
         showQuestions:false,
         showIntro:true,
-        showResults:false
+        showResults:false,
+        showResultsString: false
       }
     },
     created: function () {
+      setTimeout(function(){
+          EventBus.$emit('speak', "I'm pretty sure you're not a robot but better safe than sorry. Come on, you can do it buddy.");
+      }, 3000)
     },
     methods: {
       next:function(){
-        this.$router.push({name: 'Review'});
+        this.$router.push({name: 'finish'});
 
       },
       start:function(){
@@ -72,6 +87,12 @@ export default {
           this.showQuestions=false;
           this.showResults=true;
           this.showGauge();
+          var t = this;
+          setTimeout(function(){
+            t.showResultsString=true;
+            EventBus.$emit('speak', "I knew it. Well done. This is in the bag now!!");
+
+            }, 4000)
         }
       },
       showGauge:function(){
@@ -101,6 +122,7 @@ export default {
       }
     },
     components: {
+      clippy: clippy,
       stickyButton: stickyButton,
       modal: modal
     }
