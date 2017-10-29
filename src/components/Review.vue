@@ -46,7 +46,7 @@ export default {
     methods: {
       next:function(){
         this.$store.dispatch('SET_EMAIL', this.email)
-        this.$router.push({name: 'finish'});
+        this.$router.push({name: 'Replicant'});
 
       }
     },
