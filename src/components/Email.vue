@@ -1,5 +1,7 @@
 <template>
   <div>
+    <recaptcha></recaptcha>
+  <div  v-if="captchaPassed === true">
     Excellent, we're making good progress.
     <br/><br/>
     Now, let's have your email address.
@@ -14,9 +16,11 @@
     <br/><br/>
     Remember, your application is underway now. If you cancel we may need to reclaim our costs.
 
-    <modal></modal>
-    <clippy></clippy>
-    </div>
+      <modal></modal>
+      <clippy></clippy>
+      </div>
+      
+    </div>     
 </template>
 
 <script>
@@ -25,6 +29,7 @@ import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
 import { EventBus } from './events.js';
 import clippy from '@/components/clippy'
+import recaptcha from '@/components/recaptcha'
 
 import { mapState } from 'vuex'
 
@@ -34,14 +39,19 @@ export default {
       return {
         counter: 0,
         email:"",
-        errorCount:0
+        errorCount:0,
+        captchaPassed: false
       }
     },
     created: function () {
       setTimeout(function(){
           EventBus.$emit('speak', "Now, lets have your email address. That will be the address that people use to email you. You know, your friends and people like that");
+          EventBus.$emit('speak', "Oh, first we need to check you are not a robot. They cause a lot of problems on this site.");
       }, 2000)
       
+      var self = this;
+      EventBus.$on('captchaPassed', () => {self.setCaptchaState(true)});
+      EventBus.$on('captchaReset', () => {self.setCaptchaState(false)});
 
     },
     methods: {
@@ -81,11 +91,15 @@ export default {
       },
       back: function(){
         EventBus.$emit('showLoadingScreen', "HelloWorld");
+      },
+      setCaptchaState (state) {
+        this.captchaPassed = state;
       }
     },
     components: {
       clippy: clippy,
       stickyButton: stickyButton,
+      recaptcha: recaptcha,
       modal: modal
     }
 }

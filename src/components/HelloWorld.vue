@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div v-if="captchaPassed === true">
+     <div>
       So you want to make a complaint... 
       <br/><br/>
       Let's make this nice and easy...
@@ -12,7 +12,7 @@
       <stickyButton v-on:click="next()"></stickyButton>
     </div>
     <modal></modal>
-    <recaptcha></recaptcha>
+
     <clippy></clippy>
             
     </div>
@@ -21,7 +21,6 @@
 <script>
 
 import clippy from '@/components/clippy'
-import recaptcha from '@/components/recaptcha'
 import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
 import { EventBus } from './events.js';
@@ -35,7 +34,6 @@ export default {
   ]),
   data: function () {
       return {
-        captchaPassed: true,
         counter: 0,
         errorcount:0,
         errormessage:"",
@@ -77,13 +75,9 @@ export default {
       }
     },
     created: function () {
-      var self = this;
+      
       // `this` points to the vm instance
       this.suggestion();
-
-      EventBus.$on('captchaPassed', () => {self.setCaptchaState(true)});
-      EventBus.$on('captchaReset', () => {self.setCaptchaState(false)});
-
     },
     methods: {
       op:function(e){
@@ -136,16 +130,12 @@ export default {
             self.suggestion() 
           }, interval);
         
-      },
-      setCaptchaState (state) {
-        this.captchaPassed = state;
       }
 
     },
     components: {
       clippy: clippy,
       stickyButton: stickyButton,
-      recaptcha: recaptcha,
       modal: modal
     }
 }

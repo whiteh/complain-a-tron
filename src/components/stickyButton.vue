@@ -15,7 +15,7 @@ export default {
   data: function () {
       return {
         timer:0,
-        longPress:50
+        longPress:125
       }
     },
     methods: {
