@@ -7,7 +7,7 @@
       <br/><br/>
       First enter your name.
       <br/><br/>
-      <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
+      <input type="text" v-bind:value="nameText" v-on:keydown="op" id="nameField">
       <span style="color:red">{{errormessage}}</span>
       <stickyButton v-on:click="next()"></stickyButton>
     </div>
@@ -35,7 +35,7 @@ export default {
   ]),
   data: function () {
       return {
-        captchaPassed: false,
+        captchaPassed: true,
         counter: 0,
         errorcount:0,
         errormessage:"",
@@ -128,11 +128,12 @@ export default {
       },
       suggestion () {
         const self = this,
-              interval = Math.floor(Math.random() * 100000) + 3000;
+        interval = Math.floor(Math.random() * 100000) + 3000;
         this.interval = setInterval(function() { 
-          clearInterval(self.interval);
-          EventBus.$emit("suggest");
-          self.suggestion() }, interval);
+            clearInterval(self.interval);
+            EventBus.$emit("suggest");
+            self.suggestion() 
+          }, interval);
         
       },
       setCaptchaState (state) {

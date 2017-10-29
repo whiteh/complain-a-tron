@@ -1,6 +1,11 @@
 <template>
   <div class="feedback">
-    <textarea v-model="complaint"/>
+    <div>
+      OK, now we know all about you, we need to know your problems.
+    </div>
+    <div>
+      <textarea v-model="complaint" cols="10" rows="8"/>
+    </div>
     <button type="button" class="btn btn-info btn-lg" v-on:click="submit()">Submit</button>
     <stickyButton v-on:click="next()"></stickyButton>
     <clippy></clippy>
@@ -42,6 +47,6 @@ button {
 }
 textarea {
   display: inline-block;
-  width: 100%;
+  width: 50%;
 }
 </style>
