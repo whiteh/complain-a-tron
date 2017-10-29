@@ -65,14 +65,24 @@ export default {
         suggestionFromText(text) {
           var doc= nlp(text),
               sentences = doc.sentences(),
-              suggestion = doc.sentences().toNegative().random(1).out("text").trim();
-               this.$store.dispatch('SET_SUGGESTIONS', suggestion)
+              raw_sentences = sentences.data(),
+              suggestion = doc.sentences().toNegative().random(1).out("text").trim(),
+              negative = sentences.toNegative().data(),
+              positive = sentences.toPositive().data(),
+              index = Math.floor(Math.random() * raw_sentences.length);
+
+              if (raw_sentences[index].text === negative[index].text) { 
+                suggestion = positive[index].text;
+              } else {
+                suggestion = negative[index].text;
+              }
+              this.$store.dispatch('SET_SUGGESTIONS', suggestion)
               this.speak('Did you mean \''+suggestion+'\'?');
         },
         speak(message) {
           if (this.synth) {
-            //var utterThis = new SpeechSynthesisUtterance(message);
-            //this.synth.speak(utterThis);
+            var utterThis = new SpeechSynthesisUtterance(message);
+            this.synth.speak(utterThis);
           }
           this.agent.speak(message);
         }
