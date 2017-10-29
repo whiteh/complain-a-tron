@@ -5,9 +5,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        Name:"11",
-        Email:"22",
-        Complaint:"33",
+        Name:"-",
+        Email:"-",
+        Complaint:"-",
         Suggestions:""
     },
     actions: {

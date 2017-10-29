@@ -6,6 +6,8 @@
 <script>
 import { EventBus } from './events.js';
 
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'clippy',
     data () {

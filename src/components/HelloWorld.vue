@@ -7,7 +7,7 @@
       <br/><br/>
       First enter your name.
       <br/><br/>
-      <input type="text" v-bind:value="nameText" v-on:keydown="op" id="nameField">
+      <input type="text" v-model="nameText" v-on:keydown="op" id="nameField">
       <span style="color:red">{{errormessage}}</span>
       <stickyButton v-on:click="next()"></stickyButton>
     </div>
@@ -39,7 +39,7 @@ export default {
         counter: 0,
         errorcount:0,
         errormessage:"",
-        nameText:"frean",
+        nameText:"",
         annoyingintro:[
           {header:"Welcome to Complaint-a-tron", 
           text:`
@@ -103,7 +103,7 @@ export default {
         EventBus.$emit('showModal', header, text);
       },
       next:function(){
-          if(this.nameText==""){
+          if(this.nameText===""){
               this.errormessage="*"
               EventBus.$emit('speak', "I think you messed up. You've not entered your name.");
               return;
@@ -117,7 +117,8 @@ export default {
               this.modal("Error!!!","Please check you have actually entered your name.<br/><br/>A error was quite clearly indicated<br/><br/>It is important you pay attention when errors happen.<br/><br/>");
               break;
             case 2:
-              this.modal("Thank you.", "Excellent. Your name - " + this.nameText + " - will now be validated against all names to check your legitimacy");
+              this.modal("Thank you.", "Excellent. Your name - " + this.nameText + " - has been accepted, press Next to continue.");
+              EventBus.$emit('speak', "We're good to go!!");
               break;
             default:
               this.$store.dispatch('SET_NAME', this.nameText)
