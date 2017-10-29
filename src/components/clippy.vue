@@ -26,6 +26,10 @@ export default {
         showHelper (helper) {
           var self = this;
           helper = helper || this.selectedHelper;
+          if (this.agent) { 
+            return this.agent.show();
+            
+          }
           clippy.load(helper, function(agent){
               // do anything with the loaded agent
               agent.show();
