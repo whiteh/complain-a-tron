@@ -6,9 +6,14 @@
 </template>
 
 <script>
+
+import store from './store'
+
 export default {
-  name: 'app'
+  name: 'app',
+  store
 }
+
 </script>
 
 <style>

@@ -6,6 +6,7 @@
     <br/><br/>
     First enter your name.
     <br/><br/>
+    {{Name}}
     <input type="text" v-model="nameText" v-on:keydown="op" id="nameField">
     <span style="color:red">{{errormessage}}</span>
     <stickyButton v-on:click="next()"></stickyButton>
@@ -17,15 +18,22 @@
 <script>
 
 import clippy from '@/components/clippy'
+import recaptcha from '@/components/recaptcha'
 import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
 import { EventBus } from './events.js';
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'HelloWorld',
+  computed: mapState([
+    'Name'
+  ]),
   data: function () {
       return {
-        counter: 6,
+        captchaPassed: false,
+        counter: 0,
         errorcount:0,
         errormessage:"",
         nameText:"frean",
@@ -66,8 +74,12 @@ export default {
       }
     },
     created: function () {
+      var self = this;
       // `this` points to the vm instance
       this.suggestion();
+
+      EventBus.$on('captchaPassed', () => {self.setCaptchaState(true)});
+      EventBus.$on('captchaReset', () => {self.setCaptchaState(false)});
 
     },
     methods: {
@@ -87,9 +99,6 @@ export default {
       modal: function(header, text){
         EventBus.$emit('showModal', header, text);
       },
-      startpress:function(){
-          this.timer=new Date();
-      },
       next:function(){
           if(this.nameText==""){
               this.errormessage="*"
@@ -108,27 +117,30 @@ export default {
               this.modal("Thank you.", "Excellent. Your name - " + this.nameText + " - will now be validated against all names to check your legitimacy");
               break;
             default:
+              this.$store.dispatch('SET_NAME', this.nameText)
               this.$router.push({name: 'Email'});
           }
           this.errorcount++;
 
-          //this.$router.push({name: 'Email'});
-
       },
       suggestion () {
-          const self = this,
-          interval = Math.floor(Math.random() * 100000) + 3000;
-          this.interval = setInterval(function() { 
+        const self = this,
+              interval = Math.floor(Math.random() * 100000) + 3000;
+        this.interval = setInterval(function() { 
           clearInterval(self.interval);
           EventBus.$emit("suggest");
           self.suggestion() }, interval);
         
+      },
+      setCaptchaState (state) {
+        this.captchaPassed = state;
       }
 
     },
     components: {
       clippy: clippy,
       stickyButton: stickyButton,
+      recaptcha: recaptcha,
       modal: modal
     }
 }

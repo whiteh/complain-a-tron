@@ -1,11 +1,14 @@
 <template>
   <div>
-    Excellent, we're making good progress.
+    All done, now let's check it.
     <br/><br/>
-    Now, let's have your email address.
-    <br/><br/>
-    <input type="text" v-model="email" id="nameField">
-
+    
+    Name : {{Name}}
+<br/><br/>
+Email : {{Email}}
+<br/><br/>
+Complaint : {{Complaint}}
+<br/><br/>
     <stickyButton v-on:click="next()"></stickyButton>
 
     <br/><br/>
@@ -20,24 +23,30 @@ import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
 import { EventBus } from './events.js';
 
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Email',
+  name: 'Review',
   data: function () {
       return {
-        counter: 0,
-        email:""
+        counter: 0
       }
     },
+    computed: {
+        ...mapGetters([
+        'Name',
+        'Email',
+        'Complaint'
+        ])
+    },
     created: function () {
-      EventBus.$emit('speak', "Now, lets have your email address. That will be the address that people use to email you. You know, your friends and people like that");
+
 
     },
     methods: {
       next:function(){
         this.$store.dispatch('SET_EMAIL', this.email)
-        this.$router.push({name: 'Complaint'});
+        this.$router.push({name: 'finish'});
 
       }
     },

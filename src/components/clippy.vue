@@ -58,8 +58,8 @@ export default {
         },
         speak(message) {
           if (this.synth) {
-            var utterThis = new SpeechSynthesisUtterance(message);
-            this.synth.speak(utterThis);
+            //var utterThis = new SpeechSynthesisUtterance(message);
+            //this.synth.speak(utterThis);
           }
           this.agent.speak(message);
         }

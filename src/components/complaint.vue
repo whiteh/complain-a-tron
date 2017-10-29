@@ -2,9 +2,9 @@
   <div>
     Excellent, we're making good progress.
     <br/><br/>
-    Now, let's have your email address.
+    Now, shall we hear the complaint.
     <br/><br/>
-    <input type="text" v-model="email" id="nameField">
+    <input type="text" v-model="complaint" id="nameField">
 
     <stickyButton v-on:click="next()"></stickyButton>
 
@@ -20,14 +20,12 @@ import stickyButton from '@/components/stickyButton'
 import modal from '@/components/modal'
 import { EventBus } from './events.js';
 
-import { mapState } from 'vuex'
-
 export default {
-  name: 'Email',
+  name: 'Complaint',
   data: function () {
       return {
         counter: 0,
-        email:""
+        complaint:""
       }
     },
     created: function () {
@@ -36,8 +34,8 @@ export default {
     },
     methods: {
       next:function(){
-        this.$store.dispatch('SET_EMAIL', this.email)
-        this.$router.push({name: 'Complaint'});
+        this.$store.dispatch('SET_COMPLAINT', this.complaint)
+        this.$router.push({name: 'Review'});
 
       }
     },
