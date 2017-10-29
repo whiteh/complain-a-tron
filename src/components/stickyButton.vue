@@ -1,6 +1,6 @@
 <template>
     <span>
-        <button type="button"  @mousedown="startpress" @click="next" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
+        <button type="button"  @mousedown="startpress" @click="next" class="btn btn-info btn-lg" id="btnNext">{{text}} >>></button>
     </span>
 </template>
 
@@ -11,6 +11,7 @@ import modal from '@/components/modal';
 
 export default {
   name: 'stickyButton',
+  props:{'text':{default:"Next"}},
   data: function () {
       return {
         timer:0,
