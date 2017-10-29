@@ -65,15 +65,9 @@ export default {
               this.speak('Did you mean \''+suggestion+'\'?');
         },
         speak(message) {
-<<<<<<< HEAD
           if (this.synth) {
             //var utterThis = new SpeechSynthesisUtterance(message);
             //this.synth.speak(utterThis);
-=======
-          if (this.synth) { 
-            var utterThis = new SpeechSynthesisUtterance(message);
-            this.synth.speak(utterThis);
->>>>>>> f1e8e715334fc581da80b3f6d8bd01589e1e2eda
           }
           this.agent.speak(message);
         }
