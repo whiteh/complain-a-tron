@@ -66,6 +66,7 @@ export default {
           var doc= nlp(text),
               sentences = doc.sentences(),
               suggestion = doc.sentences().toNegative().random(1).out("text").trim();
+               this.$store.dispatch('SET_SUGGESTIONS', suggestion)
               this.speak('Did you mean \''+suggestion+'\'?');
         },
         speak(message) {

@@ -7,7 +7,8 @@ const store = new Vuex.Store({
     state: {
         Name:"11",
         Email:"22",
-        Complaint:"33"
+        Complaint:"33",
+        Suggestions:""
     },
     actions: {
         SET_NAME: function ({ commit }, name) {
@@ -18,6 +19,9 @@ const store = new Vuex.Store({
         },
         SET_COMPLAINT: function ({ commit }, complaint) {
             commit('SET_COMPLAINT', { complaint: complaint })
+        },
+        SET_SUGGESTIONS: function ({ commit }, suggestions) {
+            commit('SET_SUGGESTIONS', { suggestions: suggestions })
         }
     },
     mutations: {
@@ -29,6 +33,9 @@ const store = new Vuex.Store({
           },
           SET_COMPLAINT: (state, { complaint }) => {
             state.Complaint = complaint
+          },
+          SET_SUGGESTIONS: (state, { suggestions }) => {
+            state.Suggestions = suggestions
           }
     },
     getters: {
@@ -40,6 +47,9 @@ const store = new Vuex.Store({
           },
           Complaint: state => {
             return state.Complaint
+          },
+          Suggestions: state => {
+            return state.Suggestions
           }
     }
   })
