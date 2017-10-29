@@ -15,3 +15,5 @@ yarn-error.log*
 *.sln
 
 node_modules/
+
+serverless/client/dist/
