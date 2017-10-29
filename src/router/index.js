@@ -6,6 +6,7 @@ import Complaint from '@/components/Complaint'
 import Review from '@/components/Review'
 import finish from '@/components/finish'
 import Recaptcha from '@/components/recaptcha'
+import Complaint from '@/components/complaint'
 
 Vue.use(Router)
 
@@ -40,6 +41,12 @@ export default new Router({
       path: '/captcha',
       name: 'captcha',
       component: Recaptcha
+    },
+    {
+      path: '/complaint',
+      name: 'complaint',
+      component: Complaint
     }
+
   ]
 })

@@ -20,12 +20,16 @@ export default {
         EventBus.$on("please", ()=>{this.please()});
         EventBus.$on("suggest", ()=>{this.suggestion()});
         EventBus.$on("alert", ()=>{this.agent.play("GetAttention")});
-        console.log(this.suggestionFromText("Your product sucks. It's terrible."));
+        //console.log(this.suggestionFromText("Your product sucks. It's terrible."));
       },
       methods: {
         showHelper (helper) {
           var self = this;
           helper = helper || this.selectedHelper;
+          if (this.agent) { 
+            return this.agent.show();
+            
+          }
           clippy.load(helper, function(agent){
               // do anything with the loaded agent
               agent.show();
@@ -61,7 +65,7 @@ export default {
         suggestionFromText(text) {
           var doc= nlp(text),
               sentences = doc.sentences(),
-              suggestion = doc.sentences().toNegative().random(1).out("text");
+              suggestion = doc.sentences().toNegative().random(1).out("text").trim();
               this.speak('Did you mean \''+suggestion+'\'?');
         },
         speak(message) {
