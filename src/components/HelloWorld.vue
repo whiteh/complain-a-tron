@@ -1,56 +1,45 @@
 <template>
   <div>
-    So you want to make a complaint... 
-    <br/><br/>
-    Let's make this nice and easy...
-    <br/><br/>
-    First enter your name.
-    <br/><br/>
-    <input type="text" v-bind:value="name" v-on:keydown="op" id="nameField">
-    <span style="color:red">{{errormessage}}</span>
-    <button type="button"  @mousedown="startpress" @click="next" class="btn btn-info btn-lg" id="btnNext">Next >>></button>
-    <sticky_button></sticky_button>
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-        
-              <!-- Modal content-->
-              <div class="modal-content">
-                  <div class="modal-header">
-                    <img src="assets/logo.png" style="hight:100;width:100">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">{{modalheader}}</h4>
-                  </div>
-                  <div class="modal-body">
-                  <div v-html="modaltext"></div>
-                  </div>
-                  <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-              </div>
-        
-            </div>
-        </div>
-        <clippy></clippy>
+     <div v-if="captchaPassed === true">
+      So you want to make a complaint... 
+      <br/><br/>
+      Let's make this nice and easy...
+      <br/><br/>
+      First enter your name.
+      <br/><br/>
+      <input type="text" v-bind:value="nameText" v-on:keydown="op" id="nameField">
+      <span style="color:red">{{errormessage}}</span>
+      <stickyButton v-on:click="next()"></stickyButton>
+    </div>
+    <modal></modal>
+    <recaptcha></recaptcha>
+    <clippy></clippy>
+            
     </div>
 </template>
 
 <script>
 
 import clippy from '@/components/clippy'
+import recaptcha from '@/components/recaptcha'
+import stickyButton from '@/components/stickyButton'
+import modal from '@/components/modal'
 import { EventBus } from './events.js';
-import sticky_button from '@/components/stickyButton'
+
+import { mapState } from 'vuex'
 
 export default {
   name: 'HelloWorld',
+  computed: mapState([
+    'Name'
+  ]),
   data: function () {
       return {
-        counter: 10,
-        timer:0,
-        longPress:1000,
+        captchaPassed: true,
+        counter: 0,
         errorcount:0,
-        name:"peter",
         errormessage:"",
+        nameText:"frean",
         annoyingintro:[
           {header:"Welcome to Complaint-a-tron", 
           text:`
@@ -88,14 +77,18 @@ export default {
       }
     },
     created: function () {
+      var self = this;
       // `this` points to the vm instance
+      this.suggestion();
+
+      EventBus.$on('captchaPassed', () => {self.setCaptchaState(true)});
+      EventBus.$on('captchaReset', () => {self.setCaptchaState(false)});
 
     },
     methods: {
       op:function(e){
         if(this.counter<this.annoyingintro.length){
-          EventBus.$emit("alert");
-          this.modal(this.annoyingintro[this.counter].header,this.annoyingintro[this.counter].text);
+          this.modal(this.annoyingintro[this.counter].header, this.annoyingintro[this.counter].text);
           this.counter++;
           $("#myModal").on('hidden.bs.modal', function () {
             $("#nameField").focus();
@@ -103,49 +96,56 @@ export default {
           $("#myModal").on('show.bs.modal', function () {
             $("#nameField").blur();
           });
-
           return false;
         }
       },
       modal: function(header, text){
-        this.modaltext = text;
-        this.modalheader = header;
-        
-        $("#myModal").modal("show")
-      },
-      startpress:function(){
-          this.timer=new Date();
+        EventBus.$emit('showModal', header, text);
       },
       next:function(){
-        var timeTaken = new Date()-this.timer;
-        if(timeTaken<this.longPress){
-          this.modal("Sorry!!", "We have been having some issues with the buttons.<br/><br/>Please press them a bit harder.")
-        }else{
-          this.longPress=false;
+          if(this.nameText==""){
+              this.errormessage="*"
+              EventBus.$emit('speak', "I think you messed up. You've not entered your name.");
+              return;
+          }
           switch(this.errorcount){
             case 0:
               this.errormessage="*"
+              EventBus.$emit('speak', "check your work, dude. It's your own name, you should know it!!");
               break;
             case 1:
               this.modal("Error!!!","Please check you have actually entered your name.<br/><br/>A error was quite clearly indicated<br/><br/>It is important you pay attention when errors happen.<br/><br/>");
               break;
             case 2:
-              this.modal("Thank you.", "Excellent. Your name - " + this.name + " - will now be validated against all names to check your legitimacy");
+              this.modal("Thank you.", "Excellent. Your name - " + this.nameText + " - will now be validated against all names to check your legitimacy");
               break;
             default:
-
+              this.$store.dispatch('SET_NAME', this.nameText)
+              this.$router.push({name: 'Email'});
           }
           this.errorcount++;
-        }
+
+      },
+      suggestion () {
+        const self = this,
+        interval = Math.floor(Math.random() * 100000) + 3000;
+        this.interval = setInterval(function() { 
+            clearInterval(self.interval);
+            EventBus.$emit("suggest");
+            self.suggestion() 
+          }, interval);
         
-        
-        //this.$router.push({name: 'Email'});
-        
-        
+      },
+      setCaptchaState (state) {
+        this.captchaPassed = state;
       }
+
     },
     components: {
-      clippy: clippy
+      clippy: clippy,
+      stickyButton: stickyButton,
+      recaptcha: recaptcha,
+      modal: modal
     }
 }
 </script>

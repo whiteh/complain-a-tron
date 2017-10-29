@@ -9,17 +9,27 @@ import { EventBus } from './events.js';
 export default {
     name: 'clippy',
     data () {
-        return {};
+        return {
+          synth: window.speechSynthesis || null
+        };
       },
       mounted () {
         this.selectHelper();
+        EventBus.$on("speak", this.speak);
+        EventBus.$on("checkForSuggestions", this.suggestionFromText);
         EventBus.$on("please", ()=>{this.please()});
+        EventBus.$on("suggest", ()=>{this.suggestion()});
         EventBus.$on("alert", ()=>{this.agent.play("GetAttention")});
+        //console.log(this.suggestionFromText("Your product sucks. It's terrible."));
       },
       methods: {
         showHelper (helper) {
           var self = this;
           helper = helper || this.selectedHelper;
+          if (this.agent) { 
+            return this.agent.show();
+            
+          }
           clippy.load(helper, function(agent){
               // do anything with the loaded agent
               agent.show();
@@ -38,8 +48,34 @@ export default {
         },
         // Actions
         please () {
-          this.agent.speak("You didn't say the magic word...");
+          this.speak("You didn't say the magic word...");
         },
+        speak (text) {
+          this.agent.speak(text);
+        },
+        suggestion() {
+          const suggestions = [
+            'Have you considered using allcaps?',
+            'Have you tried Googling the problem?',
+            'Do any of your friends have this issue?  Maybe it\'s just you...'
+          ],
+          index = Math.floor(Math.random() * suggestions.length);
+          this.speak(suggestions[index]);
+        },
+        suggestionFromText(text) {
+          var doc= nlp(text),
+              sentences = doc.sentences(),
+              suggestion = doc.sentences().toNegative().random(1).out("text").trim();
+               this.$store.dispatch('SET_SUGGESTIONS', suggestion)
+              this.speak('Did you mean \''+suggestion+'\'?');
+        },
+        speak(message) {
+          if (this.synth) {
+            //var utterThis = new SpeechSynthesisUtterance(message);
+            //this.synth.speak(utterThis);
+          }
+          this.agent.speak(message);
+        }
       }
     }
 

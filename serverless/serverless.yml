@@ -21,8 +21,8 @@ provider:
   name: aws
   runtime: nodejs6.10
   credentials:
-    accessKeyId: AKIAJYUTPBJVMDFMJUZA
-    secretAccessKey: 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
+    accessKeyId: 
+    secretAccessKey: 
   stage: dev
   region: eu-west-1
 
@@ -30,8 +30,8 @@ provider:
 #  stage: dev
 #  region: us-east-1
 
-plugins:
-  - serverless-finch
+#plugins:
+#  - serverless-finch
 
 custom:
   client:
@@ -67,11 +67,11 @@ custom:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  saveUserName:
+    handler: handler.saveUserName
     events:
       - http:
-          path: person/{name}
+          path: saveUserName/{id}/{name}
           method: get
 
 #    The following are a few example events you can configure

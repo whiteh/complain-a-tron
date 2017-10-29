@@ -1,0 +1,150 @@
+[
+    {
+      "question": "You're watching TV. Suddenly you realise there's a wasp crawling on your arm. You...",
+      "answers": [
+        {
+          "answer": "Swat",
+          "score": 3
+        },
+        {
+          "answer": "Squash",
+          "score": 1
+        },
+        {
+          "answer": "Savour",
+          "score": 4
+        },
+        {
+          "answer": "Trap",
+          "score": 2
+        }
+      ]
+    },
+    {
+      "question": "You pass a homeless person. Cold night. Big city. You fumble for change, but a £10 note drops into their lap. You...",
+      "answers": [
+        {
+          "answer": "Leave it",
+          "score": 1
+        },
+        {
+          "answer": "Swap it for small change",
+          "score": 4
+        },
+        {
+          "answer": "Say it was deliberate",
+          "score": 2
+        }
+        ,
+        {
+          "answer": "Double it",
+          "score": 3
+        }
+      ]
+    },
+    {
+      "question": "A friend offers you tequila. In the glass lies a worm. Time to...",
+      "answers": [
+        {
+          "answer": "Drink it and enjoy the ritual",
+          "score": 2
+        },
+        {
+          "answer": "Do nothing to mask your disgust",
+          "score": 3
+        },
+        {
+          "answer": "Refuse it, politely",
+          "score": 1
+        },
+        {
+          "answer": "Pick it out",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "question": "Now and then you contemplate life alone. It is...",
+      "answers": [
+        {
+          "answer": "Independent",
+          "score": 2
+        },
+        {
+          "answer": "Inconceivable",
+          "score": 1
+        },
+        {
+          "answer": "Insulting",
+          "score": 3
+        },
+        {
+          "answer": "Intriguing",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "question": "You see a friend who has suffered bereavement. Afterwards you feel...",
+      "answers": [
+        {
+          "answer": "Annoyed at their lack of engagement",
+          "score": 3
+        },
+        {
+          "answer": "Powerless to help",
+          "score": 2
+        },
+        {
+          "answer": "Saddened",
+          "score": 1
+        },
+        {
+          "answer": "Bored",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "question": "At a party, a guest boasts of their perfect life. How do you respond?",
+      "answers": [
+        {
+          "answer": "I indulge them",
+          "score": 1
+        },
+        {
+          "answer": "I try to outdo them",
+          "score": 3
+        },
+        {
+          "answer": "I sit silently",
+          "score": 2
+        },
+        {
+          "answer": "I mock them",
+          "score": 4
+        }
+      ]
+    },
+    {
+      "question": "Finally, it is Bring Your Kids to Work Day. Your child misbehaves, and is slapped by the boss. What is your reaction?",
+      "answers": [
+        {
+          "answer": "Horror",
+          "score": 2
+        },
+        {
+          "answer": "Acceptance",
+          "score": 4
+        },
+        {
+          "answer": "Fury",
+          "score": 1
+        },
+        {
+          "answer": "Fear",
+          "score": 3
+        }
+      ]
+    }
+  ]
