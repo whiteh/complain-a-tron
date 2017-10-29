@@ -21,8 +21,8 @@ provider:
   name: aws
   runtime: nodejs6.10
   credentials:
-    accessKeyId: AKIAIKLPF6EOO5LWVRSA
-    secretAccessKey: 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
+    accessKeyId: 
+    secretAccessKey: 
   stage: dev
   region: eu-west-1
 
