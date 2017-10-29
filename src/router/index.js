@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Email from '@/components/Email'
 import Recaptcha from '@/components/recaptcha'
+import Complaint from '@/components/complaint'
 
 Vue.use(Router)
 
@@ -22,6 +23,12 @@ export default new Router({
       path: '/captcha',
       name: 'captcha',
       component: Recaptcha
+    },
+    {
+      path: '/complaint',
+      name: 'complaint',
+      component: Complaint
     }
+
   ]
 })
