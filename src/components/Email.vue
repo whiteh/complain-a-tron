@@ -72,7 +72,7 @@ export default {
           return false;
         }
         this.$store.dispatch('SET_EMAIL', this.email)
-        this.$router.push({name: 'Complaint'});
+        EventBus.$emit('showLoadingScreen', "Complaint");
 
       },
       validateEmail: function(email) {
@@ -80,7 +80,7 @@ export default {
         return re.test(email);
       },
       back: function(){
-        this.$router.push({name: 'HelloWorld'});
+        EventBus.$emit('showLoadingScreen', "HelloWorld");
       }
     },
     components: {

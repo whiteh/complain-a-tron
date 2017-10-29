@@ -55,6 +55,7 @@
         }
       },
       next:function(){
+
         if(!this.validationComplete){
           if(!this.suggestionChanged){
             EventBus.$emit("checkForSuggestions", this.complaint);
@@ -70,13 +71,14 @@
             this.complaint = this.prechangedComplaint;
           }
           this.$store.dispatch('SET_COMPLAINT', this.complaint)
-          this.$router.push({name: 'Review'});
+
+          EventBus.$emit('showLoadingScreen', "Review");
 
         }
 
       },
       back: function(){
-        this.$router.push({name: 'Email'});
+        EventBus.$emit('showLoadingScreen', "Email");
       }
     },
     components: {

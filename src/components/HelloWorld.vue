@@ -122,7 +122,7 @@ export default {
               break;
             default:
               this.$store.dispatch('SET_NAME', this.nameText)
-              this.$router.push({name: 'Email'});
+              EventBus.$emit('showLoadingScreen', "Email");
           }
           this.errorcount++;
 

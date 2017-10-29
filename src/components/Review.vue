@@ -58,13 +58,13 @@ export default {
           EventBus.$emit('speak', "They are serious about this. Please do check very carefully.");
           this.warningIssued=true
         }else{
-          this.$router.push({name: 'Replicant'});
+          EventBus.$emit('showLoadingScreen', "Replicant");
         }
         
 
       },
       back: function(){
-        this.$router.push({name: 'Complaint'});
+        EventBus.$emit('showLoadingScreen', "Complaint");
       }
     },
     components: {

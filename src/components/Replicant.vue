@@ -14,7 +14,7 @@
       {{question}}
       <ul id="example-1">
           <li v-for="answer in answers">
-              <stickyButton v-on:click="nextQ()" :text="answer.answer"></stickyButton>
+              <stickyButton v-on:click="nextQ()" :text="answer.answer"></stickyButton><br/><br/>
           </li>
       </ul>
     </div>
@@ -69,7 +69,7 @@ export default {
     },
     methods: {
       next:function(){
-        this.$router.push({name: 'finish'});
+        EventBus.$emit('showLoadingScreen', "finish");
 
       },
       start:function(){
