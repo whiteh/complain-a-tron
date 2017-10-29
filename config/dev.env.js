@@ -4,4 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"'
+  NODE_ENV: '"development"',
+  CAPTCHA_KEY: '"6LfKSzYUAAAAAHJlLeCLu5-ZHhy_wbcKMnvt-sGM"'
 })
