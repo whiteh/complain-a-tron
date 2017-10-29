@@ -16,9 +16,11 @@ export default {
       mounted () {
         this.selectHelper();
         EventBus.$on("speak", this.speak);
+        EventBus.$on("checkForSuggestions", this.suggestionFromText);
         EventBus.$on("please", ()=>{this.please()});
         EventBus.$on("suggest", ()=>{this.suggestion()});
         EventBus.$on("alert", ()=>{this.agent.play("GetAttention")});
+        console.log(this.suggestionFromText("Your product sucks. It's terrible."));
       },
       methods: {
         showHelper (helper) {
@@ -56,8 +58,14 @@ export default {
           index = Math.floor(Math.random() * suggestions.length);
           this.speak(suggestions[index]);
         },
+        suggestionFromText(text) {
+          var doc= nlp(text),
+              sentences = doc.sentences(),
+              suggestion = doc.sentences().toNegative().random(1).out("text");
+              this.speak('Did you mean \''+suggestion+'\'?');
+        },
         speak(message) {
-          if (this.synth) {
+          if (this.synth) { 
             var utterThis = new SpeechSynthesisUtterance(message);
             this.synth.speak(utterThis);
           }
