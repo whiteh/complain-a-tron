@@ -8,6 +8,7 @@ import finish from '@/components/finish'
 import Recaptcha from '@/components/recaptcha'
 import Replicant from '@/components/Replicant'
 
+
 Vue.use(Router)
 
 export default new Router({
