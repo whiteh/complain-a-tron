@@ -63,13 +63,12 @@
             this.prechangedComplaint = this.complaint;
             this.complaint = this.Suggestions;
             this.suggestionChanged = true;
-          }else{
-            if(this.complaint.toLowerCase()=="no thanks mona"){
-              this.complaint = this.prechangedComplaint;
-            }
           }
           this.validationComplete = true;
         }else{
+          if(this.complaint.toLowerCase()=="no thanks mona"){
+            this.complaint = this.prechangedComplaint;
+          }
           this.$store.dispatch('SET_COMPLAINT', this.complaint)
           this.$router.push({name: 'Review'});
 
